@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A43444B12CEEBF2B00B91EE5 /* RemoTopa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RemoTopa.app; path = "/Users/larendcruz/Desktop/Production/RemoTopa/build/Debug-iphoneos/RemoTopa.app"; sourceTree = "<absolute>"; };
+		A4554E1F2CEFDC720018E14B /* RemoTopa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoTopa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				A43444B32CEEBF2B00B91EE5 /* RemoTopa */,
+				A4554E1F2CEFDC720018E14B /* RemoTopa.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = RemoTopa;
-			productReference = A43444B12CEEBF2B00B91EE5 /* RemoTopa.app */;
+			productReference = A4554E1F2CEFDC720018E14B /* RemoTopa.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
