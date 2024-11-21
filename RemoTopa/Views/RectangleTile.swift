@@ -14,13 +14,7 @@ struct RectangleTile: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 5)
-            .fill(
-                color
-//                LinearGradient(
-//                    gradient: Gradient(colors: [Color.blue, Color.purple]),
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing)
-                )
+            .fill(color)
             .frame(height: 150)
             .shadow(color: .black, radius: 4)
             .padding(.horizontal, 10)

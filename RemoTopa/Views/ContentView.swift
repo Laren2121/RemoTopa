@@ -17,18 +17,19 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-                
-                ForEach(0..<10, id: \.self) { index in
-                    RectangleTile(title: "Rectangle \(index)", color: .blue)
-                        .onTapGesture {
-                            print("Tapped \(index)")
+        NavigationView {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(0..<10, id: \.self) { index in
+                        NavigationLink(destination: DetailView(title: "Rectangle \(index)")){
+                            RectangleTile(title: "Rectangle \(index)", color: .blue)
                         }
+                    }
                 }
+                .background(Color(UIColor.systemBackground))
             }
-            .background(Color(UIColor.systemBackground))
         }
+        .navigationTitle("Scrollable Rectangles")
     }
 }
 
