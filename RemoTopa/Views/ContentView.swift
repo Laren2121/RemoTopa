@@ -17,19 +17,29 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        ZStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(0..<10, id: \.self) { index in
-                        NavigationLink(destination: DetailView(title: "Rectangle \(index)")){
                             RectangleTile(title: "Rectangle \(index)", color: .blue)
-                        }
+                            .onTapGesture {
+                                withAnimation(.spring()) {
+                                    selectedRectangle = index
+                                }
+                            }
                     }
                 }
                 .background(Color(UIColor.systemBackground))
             }
+            .padding()
         }
-        .navigationTitle("Scrollable Rectangles")
+        .blur(radius: selectedRectangle != nil ? 10 : 0)
+        .disabled(selectedRectangle != nil)
+        
+        if let selected = selectedRectangle {
+            ExpandedRectangleView(title: "Rectangle \(selected)", isExpanded: $selectedRectangle)
+                .transition(.scale)
+        }
     }
 }
 
