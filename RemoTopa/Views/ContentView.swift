@@ -8,37 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var selectedRectangle: Int? = nil
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+    ]
+    
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                ForEach(0..<10) { index in
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ))
-                        .frame(height: 150)
-                        .shadow(radius: 10)
-                        .padding(.horizontal, 20)
-                        .overlay(
-                            Text("Rectangle \(index + 1)")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                        )
+            LazyVGrid(columns: columns, spacing: 20) {
+                
+                ForEach(0..<10, id: \.self) { index in
+                    RectangleTile(title: "Rectangle \(index)", color: .blue)
                         .onTapGesture {
-                            print("Tap on Rectangle \(index + 1)")
+                            print("Tapped \(index)")
                         }
                 }
             }
-            .padding(.vertical, 20)
+            .background(Color(UIColor.systemBackground))
         }
-        .background(Color(UIColor.systemBackground))
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
-
