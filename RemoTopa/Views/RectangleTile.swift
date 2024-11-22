@@ -16,7 +16,12 @@ struct RectangleTile: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .fill(color)
-            .frame(height: isSelected ? 300 : 150) // Expand height when selected
+            .frame(
+                maxWidth: .infinity,
+                minHeight: 150,
+                maxHeight: 150
+            )
+            .aspectRatio(isSelected ? 2 : 1, contentMode: .fit)
             .shadow(radius: 10)
             .overlay(
                 Text(title)
@@ -24,6 +29,7 @@ struct RectangleTile: View {
                     .foregroundColor(.white)
             )
             .animation(.spring(), value: isSelected)
+            .gridCellColumns(isSelected ? 2 : 1)
     }
 }
 
