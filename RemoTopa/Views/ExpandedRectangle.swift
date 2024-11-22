@@ -1,56 +1,56 @@
 //
-//  ExpandedRectangleView.swift
+//  ExpandedRectangle.swift
 //  RemoTopa
 //
-//  Created by Laren Mark D'Cruz on 2024-11-21.
+//  Created by Laren Mark D'Cruz on 2024-11-22.
 //
 
 import SwiftUI
 
-struct ExpandedRectangleView: View {
+struct ExpandedRectangle: View {
     var title: String
-    @Binding var isExpanded: Bool
     var namespace: Namespace.ID
+    @Binding var isExpanded: Int?
     
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.black.opacity(0.5)
                 .ignoresSafeArea()
                 .onTapGesture {
                     withAnimation(.spring()) {
-                        isExpanded = false
+                        isExpanded = nil
                     }
                 }
             
             RoundedRectangle(cornerRadius: 25)
                 .fill(Color.blue)
+                .matchedGeometryEffect(id: title, in: namespace)
                 .frame(width: 300, height: 300)
                 .shadow(radius: 20)
                 .overlay(
-                    VStack(spacing: 20) {
+                    VStack(spacing: 20){
                         Text(title)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                         
-                        // Placeholder for additional information
-                        Text("Detailed information about \(title) goes here.")
+                        Text("Detailed information about \(title) will be displayed here.")
                             .font(.body)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 20)
+                            
                     }
                 )
-                .matchedGeometryEffect(id: title, in: namespace)
-                .transition(.scale)
+                
         }
     }
 }
 
-struct ExpandedRectangleView_Previews: PreviewProvider {
+struct ExpandedRectangle_Previews: PreviewProvider {
     @Namespace static var animation
     
     static var previews: some View {
-        ExpandedRectangleView(title: "Rectangle 1", isExpanded: .constant(true), namespace: animation)
+        ExpandedRectangle(title: "Rectangle 1", namespace: animation, isExpanded: .constant(1))
     }
 }
