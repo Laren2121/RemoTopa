@@ -11,28 +11,19 @@ struct RectangleTile: View {
     
     var title: String
     var color: Color
-    var namespace: Namespace.ID
     var isSelected: Bool
-    var onTap: () -> Void
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
+        RoundedRectangle(cornerRadius: 25)
             .fill(color)
-            .matchedGeometryEffect(id: title, in: namespace)
-            .frame(height: 150)
-            //.frame(height: isSelected ? 300 : 150)
-            .shadow(color: .black, radius: 4)
+            .frame(height: isSelected ? 300 : 150) // Expand height when selected
+            .shadow(radius: 10)
             .overlay(
                 Text(title)
-                    .font(.headline)
+                    .font(isSelected ? .largeTitle : .headline) // Adjust font size
                     .foregroundColor(.white)
             )
-            .onTapGesture {
-                print("Tapped \(title)")
-                onTap()
-            }
-//            .scaleEffect(isSelected ? 1.0 : 1.0)
-//            .animation(.spring(), value: isSelected)
+            .animation(.spring(), value: isSelected)
     }
 }
 
@@ -40,7 +31,7 @@ struct RectangleTile_Previews: PreviewProvider {
     @Namespace static var animation
     
     static var previews: some View {
-        RectangleTile(title: "Sample", color: .blue, namespace: animation, isSelected: false, onTap: {})
+        RectangleTile(title: "Sample", color: .blue, isSelected: false)
             .previewLayout(.sizeThatFits)
     }
 }
