@@ -44,18 +44,19 @@ struct ExpandedRectangleView: View {
                     .gesture(
                         DragGesture()
                             .onChanged { value in
-                                if value.translation.width > 0 {
-                                    dragOffset.width = value.translation.width
-                                }
+                                // Update drag offset (allow dragging in both directions)
+                                dragOffset.width = value.translation.width
                             }
                             .onEnded { value in
                                 let dragThreshold: CGFloat = 100
-                                if dragOffset.width > dragThreshold {
+                                if abs(dragOffset.width) > dragThreshold {
+                                    // If dragged enough, exit full-screen mode
                                     withAnimation(.easeInOut(duration: 0.5)) {
                                         isFullScreen = false
                                         dragOffset = .zero
                                     }
                                 } else {
+                                    // Otherwise, snap back to original position
                                     withAnimation(.easeInOut(duration: 0.3)) {
                                         dragOffset = .zero
                                     }
