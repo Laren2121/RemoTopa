@@ -85,6 +85,10 @@ struct ExpandedRectangleView: View {
                             }
                         )
                         .onTapGesture(count: 2) {
+                            
+                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                            impactHeavy.impactOccurred()
+                            
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 isFullScreen = true
                             }

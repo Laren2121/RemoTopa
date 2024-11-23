@@ -24,6 +24,10 @@ struct ContentView: View {
                             isSelected: selectedRectangle == index,
                             namespace: animationNamespace,
                             onTap: {
+                                
+                                let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                impactMed.impactOccurred()
+                                
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     selectedRectangle = index
                                 }
