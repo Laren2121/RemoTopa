@@ -51,6 +51,10 @@ struct ExpandedRectangleView: View {
                                 let dragThreshold: CGFloat = 100
                                 if abs(dragOffset.width) > dragThreshold {
                                     // If dragged enough, exit full-screen mode
+                                    
+                                    let impactLight = UIImpactFeedbackGenerator(style: .light)
+                                    impactLight.impactOccurred()
+                                    
                                     withAnimation(.easeInOut(duration: 0.5)) {
                                         isFullScreen = false
                                         dragOffset = .zero
