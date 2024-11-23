@@ -15,6 +15,7 @@ struct ExpandedRectangleView: View {
     var onTap: () -> Void
     
     @State private var isFullScreen: Bool = false
+    @State private var dragOffset: CGSize = .zero
 
     var body: some View {
         VStack {
@@ -37,14 +38,30 @@ struct ExpandedRectangleView: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                         }
+                            .padding(.top, 50)
                     )
-                    .onTapGesture(count: 3) {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isFullScreen = false
-                        }
-                    }
-                    
-                
+                    //.offset(x: dragOffset.width)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                if value.translation.width > 0 {
+                                    dragOffset.width = value.translation.width
+                                }
+                            }
+                            .onEnded { value in
+                                let dragThreshold: CGFloat = 100
+                                if dragOffset.width > dragThreshold {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                        isFullScreen = false
+                                        dragOffset = .zero
+                                    }
+                                } else {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        dragOffset = .zero
+                                    }
+                                }
+                            }
+                    )
             } else {
                 VStack {
                     Spacer()
