@@ -38,7 +38,7 @@ struct ExpandedRectangleView: View {
                                 .padding()
                         }
                     )
-                    .onTapGesture {
+                    .onTapGesture(count: 3) {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             isFullScreen = false
                         }
