@@ -8,41 +8,34 @@
 import SwiftUI
 
 struct RectangleTile: View {
-    
+    var index: Int
     var title: String
     var color: Color
     var isSelected: Bool
+    var namespace: Namespace.ID
     var onTap: () -> Void
     
     var body: some View {
-        let screenWidth = UIScreen.main.bounds.width
-        let itemWidth = (screenWidth/2) - 30
-        
-        
-        RoundedRectangle(cornerRadius: 25)
-            .fill(color)
-            .frame(
-                width: isSelected ? screenWidth - 40 : itemWidth,
-                height: isSelected ? screenWidth - 40 : 150
-            )
-            .shadow(radius: 10)
-            .overlay(
-                Text(title)
-                    .font(isSelected ? .largeTitle : .headline) // Adjust font size
-                    .foregroundColor(.white)
-            )
-            .onTapGesture {
-                onTap()
-            }
-            .animation(.spring(), value: isSelected)
-    }
+            RoundedRectangle(cornerRadius: 25)
+                .fill(color)
+                .matchedGeometryEffect(id: index, in: namespace)
+                .frame(height: 150)
+                .overlay(
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                )
+                .onTapGesture {
+                    onTap()
+                }
+        }
 }
 
 struct RectangleTile_Previews: PreviewProvider {
     @Namespace static var animation
     
     static var previews: some View {
-        RectangleTile(title: "Sample", color: .blue, isSelected: false, onTap: { })
+        RectangleTile(index: 1, title: "Sample", color: .blue, isSelected: false, namespace: animation, onTap: { })
             .previewLayout(.sizeThatFits)
     }
 }

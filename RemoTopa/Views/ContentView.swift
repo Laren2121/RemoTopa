@@ -8,59 +8,58 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Namespace private var animationNamespace
     @State private var selectedRectangle: Int? = nil
     
     var body: some View {
         ZStack {
+            // The grid of rectangles
             ScrollView {
-                LazyVStack(spacing: 20) {
-                    ForEach(generateRows(), id: \.self) { row in
-                        if row.count == 1 {
-                            let index = row[0]
-                            let isSelected = selectedRectangle == index
-                            
-                            RectangleTile(
-                                title: "Rectangle \(index)",
-                                color: .blue,
-                                isSelected: isSelected,
-                                onTap: {
-                                    withAnimation(.spring) {
-                                        selectedRectangle = nil
-                                    }
-                                }
-                            )
-                        } else {
-                            HStack(spacing: 20) {
-                                ForEach(row, id: \.self) { index in
-                                    let isSelected = selectedRectangle == index
-                                    
-                                    RectangleTile(
-                                        title: "Rectangle \(index)",
-                                        color: .blue,
-                                        isSelected: isSelected,
-                                        onTap: {
-                                            withAnimation(.spring) {
-                                                selectedRectangle = index
-                                            }
-                                        }
-                                    )
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                    ForEach(1...10, id: \.self) { index in
+                        RectangleTile(
+                            index: index,
+                            title: "Rectangle \(index)",
+                            color: .blue,
+                            isSelected: selectedRectangle == index,
+                            namespace: animationNamespace,
+                            onTap: {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    selectedRectangle = index
                                 }
                             }
-                            .padding(.horizontal, 20)
-                        }
+                        )
                     }
                 }
-                .padding(.vertical, 20)
+                .padding()
             }
+            .blur(radius: selectedRectangle != nil ? 10 : 0)
+            .animation(.easeInOut(duration: 0.5), value: selectedRectangle)
+            .allowsHitTesting(selectedRectangle == nil)
             
-            if selectedRectangle != nil {
-                Color.black.opacity(0.001)
+            // Overlay when a rectangle is selected
+            if let selectedRectangle = selectedRectangle {
+                Color.black.opacity(0.3)
+                    .contentShape(Rectangle())
                     .ignoresSafeArea()
                     .onTapGesture {
-                        withAnimation(.spring()) {
-                            selectedRectangle = nil
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            self.selectedRectangle = nil
                         }
                     }
+                
+                ExpandedRectangleView(
+                    index: selectedRectangle,
+                    title: "Rectangle \(selectedRectangle)",
+                    color: .blue,
+                    namespace: animationNamespace,
+                    onTap: {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            self.selectedRectangle = nil
+                        }
+                    }
+                )
+                .transition(.opacity)
             }
         }
     }
