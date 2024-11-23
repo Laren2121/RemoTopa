@@ -13,32 +13,67 @@ struct ExpandedRectangleView: View {
     var color: Color
     var namespace: Namespace.ID
     var onTap: () -> Void
+    
+    @State private var isFullScreen: Bool = false
 
     var body: some View {
         VStack {
-            Spacer()
-            RoundedRectangle(cornerRadius: 25)
-                .fill(color)
-                .matchedGeometryEffect(id: index, in: namespace)
-                .frame(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height / 2)
-                .overlay(
-                    VStack {
-                        Text(title)
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
-                            .padding()
-                                                
-                        Text("Detailed information about \(title) will be displayed here.")
-                            .font(.body)
-                            .foregroundStyle(.white)
-                            .multilineTextAlignment(.center)
-                            .padding()
+            if isFullScreen {
+                RoundedRectangle(cornerRadius: 0)
+                    .fill(color)
+                    .matchedGeometryEffect(id: index, in: namespace)
+                    .ignoresSafeArea()
+                    .overlay(
+                        VStack(spacing: 20) {
+                            Text(title)
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .padding()
+                            
+                            Spacer()
+                            Text("This is full screen view")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
+                    )
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            isFullScreen = false
+                        }
                     }
-                )
-                .onTapGesture {
-                    onTap()
+                    
+                
+            } else {
+                VStack {
+                    Spacer()
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(color)
+                        .matchedGeometryEffect(id: index, in: namespace)
+                        .frame(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height / 2)
+                        .overlay(
+                            VStack {
+                                Text(title)
+                                    .font(.largeTitle)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                
+                                Text("Detailed information about \(title) will be displayed here.")
+                                    .font(.body)
+                                    .foregroundStyle(.white)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                            }
+                        )
+                        .onTapGesture(count: 2) {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                isFullScreen = true
+                            }
+                        }
+                    Spacer()
                 }
-            Spacer()
+            }
         }
     }
 }
