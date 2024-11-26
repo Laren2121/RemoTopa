@@ -17,22 +17,22 @@ struct CityTile: View {
         ZStack {
             Image(city.imageName)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
                 .matchedGeometryEffect(id: city.id, in: nameSpace)
-                .frame(height: 150)
+                .frame(height: 180)
+                .frame(maxWidth: .infinity)
                 .clipped()
-                .cornerRadius(25)
+                .cornerRadius(10)
+                .shadow(radius: 5)
             
-            VStack {
-                Spacer()
-                Text(city.name)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(8)
-                    .background(Color.black.opacity(0.6))
-                    .cornerRadius(10)
-                    .padding([.bottom], 10)
-            }
+            Text(city.name)
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding(8)
+                .background(Color.black.opacity(0.6))
+                .cornerRadius(10)
+                .padding([.bottom], 10)
+
         }
         .onTapGesture {
             onTap()

@@ -26,25 +26,28 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            // The grid of rectangles
             ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 5) {
+                LazyVGrid(
+                    columns: [GridItem(.flexible())], //, GridItem(.flexible())],
+                    spacing: 20
+                ) {
                     ForEach(cities) { city in
                         CityTile(city: city,
                                  isSelected: selectedCity?.id == city.id,
                                  nameSpace: animationNamespace,
                                  onTap: {
-                                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                                    impactMed.impactOccurred()
-                                    
-                                    withAnimation(.easeInOut(duration: 0.5)) {
-                                        selectedCity = city
-                                    }
-                                }
+                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                            impactMed.impactOccurred()
+                            
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                selectedCity = city
+                            }
+                        }
                         )
                     }
                 }
-                .padding()
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
             }
             .blur(radius: selectedCity != nil ? 10 : 0)
             .animation(.easeInOut(duration: 0.5), value: selectedCity)
