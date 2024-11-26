@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CityView: View {
+struct CityTile: View {
     var city: City
     var isSelected: Bool
     var nameSpace: Namespace.ID
@@ -45,9 +45,9 @@ struct CityTile_Previews: PreviewProvider {
     @Namespace static var namespace
 
     static var previews: some View {
-        CityView(
-            city: City(id: 1, name: "Sample City", imageName: "sampleimage"),
-            isSelected: false,
+        CityTile(
+            city: City(id: 1, name: "Argentina", imageName: "Argentina"),
+            isSelected: true,
             nameSpace: namespace,
             onTap: {}
         )
