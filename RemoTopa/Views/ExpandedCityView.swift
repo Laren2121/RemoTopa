@@ -138,8 +138,8 @@ struct ExpandedCityView: View {
                    imageOffset = .zero
                }
 
-               // Animate to the opposite offset over 1 minute
-               withAnimation(Animation.linear(duration: 60)) {
+               // Animation inside the tile set to 15 seconds
+               withAnimation(Animation.linear(duration:  15)) {
                    switch animationDirection {
                    case .leftToRight:
                        imageOffset = CGSize(width: extraWidth / 2, height: 0)
