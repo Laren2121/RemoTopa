@@ -28,7 +28,7 @@ struct ContentView: View {
         ZStack {
             // The grid of rectangles
             ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 5) {
                     ForEach(cities) { city in
                         CityTile(city: city,
                                  isSelected: selectedCity?.id == city.id,
