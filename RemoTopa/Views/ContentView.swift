@@ -11,6 +11,19 @@ struct ContentView: View {
     @Namespace private var animationNamespace
     @State private var selectedRectangle: Int? = nil
     
+    let cities: [City] = [
+        City(id: 1, name: "Portugal", imageName: "Portugal"),
+        City(id: 2, name: "Thailand", imageName: "Thailand"),
+        City(id: 3, name: "Indonesia", imageName: "Indonesia"),
+        City(id: 4, name: "Germany", imageName: "Germany"),
+        City(id: 5, name: "Czechrepublic", imageName: "Czechrepublic"),
+        City(id: 6, name: "Colombia", imageName: "Colombia"),
+        City(id: 7, name: "Spain", imageName: "Spain"),
+        City(id: 8, name: "Mexico", imageName: "Mexico"),
+        City(id: 9, name: "Hungary", imageName: "Hungary"),
+        City(id: 10, name: "Argentina", imageName: "Argentina")
+    ]
+    
     var body: some View {
         ZStack {
             // The grid of rectangles
