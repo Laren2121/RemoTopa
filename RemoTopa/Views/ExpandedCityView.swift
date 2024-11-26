@@ -15,7 +15,25 @@ struct ExpandedCityView: View {
     @State private var isFullScreen: Bool = false
     @State private var dragOffset: CGSize = .zero
     
+    @State private var imageOffset: CGSize = .zero
+    @State private var hasAnimationStarted = false
+    @State private var animationDirection: AnimationDirection? = nil
+    
+    enum AnimationDirection {
+        case leftToRight
+        case rightToLeft
+        case topToBottom
+        case bottomToTop
+    }
+    
     var body: some View {
+        
+        let imageWidth = UIScreen.main.bounds.width - 40
+        let imageHeight = UIScreen.main.bounds.height / 2
+        let scaleFactor: CGFloat = 1.2
+        let extraWidth = imageWidth * (scaleFactor - 1)
+        let extraHeight = imageHeight * (scaleFactor - 1)
+        
         ZStack {
             if isFullScreen {
                 Image(city.imageName)
@@ -56,31 +74,35 @@ struct ExpandedCityView: View {
                             isFullScreen = false
                         }
                     }
-                    
+                
             } else {
                 VStack {
                     Spacer()
-                    ZStack {
+                    ZStack(alignment: .bottom) {
                         Image(city.imageName)
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
                             .matchedGeometryEffect(id: city.id, in: namespace)
-                            .frame(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height / 2)
+                            .frame(width: imageWidth, height: imageHeight)
+                            .scaleEffect(scaleFactor)
+                            .offset(imageOffset)
                             .clipped()
                             .cornerRadius(25)
-                        
-                        VStack {
-                            Spacer()
-                            Text(city.name)
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.black.opacity(0.6))
-                                .cornerRadius(10)
-                                .padding([.bottom], 10)
-                        }
+                            .shadow(radius: 10)
+                            .onAppear {
+                                startImageAnimation(extraWidth: extraWidth, extraHeight: extraHeight)
+                            }
+                        Text(city.name)
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(10)
+                            .padding([.bottom], 20)
+                            .padding([.leading, .trailing], 20)
                     }
                     .onTapGesture(count: 2) {
+                        // Haptic feedback after double-tapping
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                         impactHeavy.impactOccurred()
                         
@@ -93,6 +115,46 @@ struct ExpandedCityView: View {
             }
         }
     }
+    
+    func startImageAnimation(extraWidth: CGFloat, extraHeight: CGFloat) {
+           // Only start the animation once
+           if !hasAnimationStarted {
+               hasAnimationStarted = true
+               // Generate a random direction
+               let directions: [AnimationDirection] = [.leftToRight, .rightToLeft, .topToBottom, .bottomToTop]
+               animationDirection = directions.randomElement() ?? .leftToRight
+
+               // Set initial offset based on direction
+               switch animationDirection {
+               case .leftToRight:
+                   imageOffset = CGSize(width: -extraWidth / 2, height: 0)
+               case .rightToLeft:
+                   imageOffset = CGSize(width: extraWidth / 2, height: 0)
+               case .topToBottom:
+                   imageOffset = CGSize(width: 0, height: -extraHeight / 2)
+               case .bottomToTop:
+                   imageOffset = CGSize(width: 0, height: extraHeight / 2)
+               case .none:
+                   imageOffset = .zero
+               }
+
+               // Animate to the opposite offset over 1 minute
+               withAnimation(Animation.linear(duration: 60)) {
+                   switch animationDirection {
+                   case .leftToRight:
+                       imageOffset = CGSize(width: extraWidth / 2, height: 0)
+                   case .rightToLeft:
+                       imageOffset = CGSize(width: -extraWidth / 2, height: 0)
+                   case .topToBottom:
+                       imageOffset = CGSize(width: 0, height: extraHeight / 2)
+                   case .bottomToTop:
+                       imageOffset = CGSize(width: 0, height: -extraHeight / 2)
+                   case .none:
+                       imageOffset = .zero
+                   }
+               }
+           }
+       }
 }
 
 
