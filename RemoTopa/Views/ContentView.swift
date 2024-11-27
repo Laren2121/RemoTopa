@@ -26,6 +26,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            
+            VStack {
+                LinearGradient(gradient: Gradient(colors: [.orange, .black]), startPoint: .top, endPoint: .bottom)
+            }
+            .edgesIgnoringSafeArea(.all)
+            
             ScrollView {
                 LazyVGrid(
                     columns: [GridItem(.flexible())], //, GridItem(.flexible())],
@@ -53,7 +59,6 @@ struct ContentView: View {
             .animation(.easeInOut(duration: 0.5), value: selectedCity)
             .allowsHitTesting(selectedCity == nil)
             
-            // Overlay when a rectangle is selected
             if let selectedCity = selectedCity {
                 
                 Color.clear
