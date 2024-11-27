@@ -80,10 +80,8 @@ struct ExpandedCityView: View {
                                         dragOffset = .zero
                                     }
                                 }
-                                
                             }
                     )
-                
             } else {
                 VStack {
                     Spacer()
@@ -102,30 +100,22 @@ struct ExpandedCityView: View {
                                 startImageAnimation(extraWidth: extraWidth, extraHeight: extraHeight)
                             }
                         
-                            Text(city.name)
+                        Text(city.name)
                             .font(.largeTitle)
-                                .foregroundColor(.white)
-                                .padding(8)
-                                //.background(Color.black.opacity(0.6))
-                                //.background(.ultraThinMaterial)
-//                                .background(
-//                                    RoundedRectangle(cornerRadius: 10)
-//                                        .fill(.ultraThinMaterial)
-//                                )
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(.clear)
-                                        .background(BlurView(style: .systemUltraThinMaterialDark))
-                                )
-                                .cornerRadius(10)
-                                .padding([.top], 20)
-                                .padding([.leading, .trailing], 23)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
-                                .multilineTextAlignment(.center)
-                                .accessibilityLabel("City name: \(city.name)")
-
-
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(.clear)
+                                    .background(BlurView(style: .systemUltraThinMaterialDark))
+                            )
+                            .cornerRadius(10)
+                            .padding([.top], 20)
+                            .padding([.leading, .trailing], 23)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .multilineTextAlignment(.center)
+                            .accessibilityLabel("City name: \(city.name)")
                     }
                     .onTapGesture(count: 2) {
 

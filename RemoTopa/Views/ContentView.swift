@@ -36,13 +36,13 @@ struct ContentView: View {
                                  isSelected: selectedCity?.id == city.id,
                                  nameSpace: animationNamespace,
                                  onTap: {
-                            let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                            impactMed.impactOccurred()
-                            
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                selectedCity = city
+                                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                    impactMed.impactOccurred()
+                                    
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                        selectedCity = city
+                                    }
                             }
-                        }
                         )
                     }
                 }
