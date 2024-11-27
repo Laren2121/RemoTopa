@@ -14,7 +14,7 @@ struct CityTile: View {
     var onTap: () -> Void
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             Image(city.imageName)
                 .resizable()
                 .scaledToFill()
@@ -26,13 +26,13 @@ struct CityTile: View {
                 .shadow(radius: 5)
             
             Text(city.name)
-                .font(.headline)
+                .font(.largeTitle)
                 .foregroundColor(.white)
                 .padding(8)
                 .background(Color.black.opacity(0.6))
                 .cornerRadius(10)
-                .padding([.bottom], 10)
-
+                .padding([.top], 15)
+                .padding([.leading, .trailing], 5)
         }
         .onTapGesture {
             onTap()
@@ -46,7 +46,7 @@ struct CityTile_Previews: PreviewProvider {
 
     static var previews: some View {
         CityTile(
-            city: City(id: 1, name: "Argentina", imageName: "Argentina"),
+            city: City(id: 1, name: "Buenos Aires, Argentina", imageName: "Argentina"),
             isSelected: true,
             nameSpace: namespace,
             onTap: {}
