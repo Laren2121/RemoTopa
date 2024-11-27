@@ -19,6 +19,10 @@ struct ExpandedCityView: View {
     @State private var hasAnimationStarted = false
     @State private var animationDirection: AnimationDirection? = nil
     
+    @State private var fullScreenImageOffset: CGSize = .zero
+    @State private var hasFullScreenAnimationStarted = false
+    @State private var fullScreenAnimationDirection: AnimationDirection? = nil
+    
     enum AnimationDirection {
         case leftToRight
         case rightToLeft
@@ -34,6 +38,12 @@ struct ExpandedCityView: View {
         let extraWidth = imageWidth * (scaleFactor - 1)
         let extraHeight = imageHeight * (scaleFactor - 1)
         
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let fullScreenScaleFactor: CGFloat = 1.2 // Adjust as needed
+        let fullScreenExtraWidth = screenWidth * (fullScreenScaleFactor - 1)
+        let fullScreenExtraHeight = screenHeight * (fullScreenScaleFactor - 1)
+        
         ZStack {
             if isFullScreen {
                 Image(city.imageName)
@@ -41,9 +51,18 @@ struct ExpandedCityView: View {
                     .aspectRatio(contentMode: .fill)
                     .matchedGeometryEffect(id: city.id, in: namespace)
                     .ignoresSafeArea()
-                    .blur(radius: 10)
+                    .blur(radius: 7)
+                    .overlay(Color.black.opacity(0.6))
+                    .onAppear() {
+                        startFullScreenImageAnimation(
+                            extraWidth: fullScreenExtraWidth,
+                            extraHeight: fullScreenExtraHeight)
+                    }
+//                    .onDisappear() {
+//                        hasFullScreenAnimationStarted = false
+//                        fullScreenImageOffset = .zero
+//                    }
                     .offset(x: dragOffset.width)
-                    .overlay(Color.black.opacity(0.4))
                     .gesture(
                         DragGesture()
                             .onChanged { value in
@@ -68,14 +87,6 @@ struct ExpandedCityView: View {
                                 
                             }
                     )
-                    .onTapGesture {
-                        let impactLight = UIImpactFeedbackGenerator(style: .light)
-                        impactLight.impactOccurred()
-                        
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isFullScreen = false
-                        }
-                    }
                 
             } else {
                 VStack {
@@ -104,7 +115,7 @@ struct ExpandedCityView: View {
                             .padding([.leading, .trailing], 20)
                     }
                     .onTapGesture(count: 2) {
-                        // Haptic feedback after double-tapping
+
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                         impactHeavy.impactOccurred()
                         
@@ -140,8 +151,7 @@ struct ExpandedCityView: View {
                    imageOffset = .zero
                }
 
-               // Animation inside the tile set to 15 seconds
-               withAnimation(Animation.linear(duration:  15)) {
+               withAnimation(Animation.linear(duration:  8)) {
                    switch animationDirection {
                    case .leftToRight:
                        imageOffset = CGSize(width: extraWidth / 2, height: 0)
@@ -157,9 +167,44 @@ struct ExpandedCityView: View {
                }
            }
        }
+    
+    func startFullScreenImageAnimation(extraWidth: CGFloat, extraHeight: CGFloat) {
+        if !hasFullScreenAnimationStarted {
+            hasFullScreenAnimationStarted = true
+
+            let directions: [AnimationDirection] = [.leftToRight, .rightToLeft, .topToBottom, .bottomToTop]
+            fullScreenAnimationDirection = directions.randomElement() ?? .leftToRight
+
+            switch fullScreenAnimationDirection {
+            case .leftToRight:
+                fullScreenImageOffset = CGSize(width: -extraWidth / 2, height: 0)
+            case .rightToLeft:
+                fullScreenImageOffset = CGSize(width: extraWidth / 2, height: 0)
+            case .topToBottom:
+                fullScreenImageOffset = CGSize(width: 0, height: -extraHeight / 2)
+            case .bottomToTop:
+                fullScreenImageOffset = CGSize(width: 0, height: extraHeight / 2)
+            case .none:
+                fullScreenImageOffset = .zero
+            }
+
+            withAnimation(Animation.linear(duration: 10)) {
+                switch fullScreenAnimationDirection {
+                case .leftToRight:
+                    fullScreenImageOffset = CGSize(width: extraWidth / 2, height: 0)
+                case .rightToLeft:
+                    fullScreenImageOffset = CGSize(width: -extraWidth / 2, height: 0)
+                case .topToBottom:
+                    fullScreenImageOffset = CGSize(width: 0, height: extraHeight / 2)
+                case .bottomToTop:
+                    fullScreenImageOffset = CGSize(width: 0, height: -extraHeight / 2)
+                case .none:
+                    fullScreenImageOffset = .zero
+                }
+            }
+        }
+    }
 }
-
-
 
 struct ExpandedCityView_Previews: PreviewProvider {
     @Namespace static var namespace
