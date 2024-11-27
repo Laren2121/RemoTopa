@@ -41,7 +41,9 @@ struct ExpandedCityView: View {
                     .aspectRatio(contentMode: .fill)
                     .matchedGeometryEffect(id: city.id, in: namespace)
                     .ignoresSafeArea()
+                    .blur(radius: 10)
                     .offset(x: dragOffset.width)
+                    .overlay(Color.black.opacity(0.4))
                     .gesture(
                         DragGesture()
                             .onChanged { value in
