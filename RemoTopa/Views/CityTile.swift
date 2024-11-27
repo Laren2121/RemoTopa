@@ -29,7 +29,12 @@ struct CityTile: View {
                     .font(.title)
                     .foregroundColor(.white)
                     .padding(8)
-                    .background(Color.black.opacity(0.6))
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.clear)
+                            .background(BlurView(style: .systemUltraThinMaterialDark))
+                            .opacity(0.5)
+                    )
                     .cornerRadius(10)
                     .padding([.top], 15)
                     .padding([.leading, .trailing], 5)

@@ -107,7 +107,8 @@ struct ExpandedCityView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(.clear)
-                                    .background(BlurView(style: .systemUltraThinMaterialDark))
+                                    .background(BlurView(style: .dark))
+                                    .opacity(0.7)
                             )
                             .cornerRadius(10)
                             .padding([.top], 20)
@@ -215,7 +216,6 @@ struct ExpandedCityView_Previews: PreviewProvider {
     static var previews: some View {
         ExpandedCityView(
             city: City(id: 1, name: "Buenos Aires, Argentina", imageName: "Argentina"),
-            //city: City(id: 1, name: "Argentina", imageName: "Argentina"),
             namespace: namespace,
             onTap: {}
         )
