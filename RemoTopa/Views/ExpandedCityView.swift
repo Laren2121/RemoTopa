@@ -103,10 +103,20 @@ struct ExpandedCityView: View {
                             }
                         
                             Text(city.name)
-                                .font(.largeTitle)
+                            .font(.largeTitle)
                                 .foregroundColor(.white)
                                 .padding(8)
-                                .background(Color.black.opacity(0.6))
+                                //.background(Color.black.opacity(0.6))
+                                //.background(.ultraThinMaterial)
+//                                .background(
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .fill(.ultraThinMaterial)
+//                                )
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(.clear)
+                                        .background(BlurView(style: .systemUltraThinMaterialDark))
+                                )
                                 .cornerRadius(10)
                                 .padding([.top], 20)
                                 .padding([.leading, .trailing], 23)
