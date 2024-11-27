@@ -101,7 +101,7 @@ struct ExpandedCityView: View {
                             }
                         
                         Text(city.name)
-                            .font(.custom("GeneralSans-ExtraLight", size: 40))
+                            .font(.custom("GeneralSans-Light", size: 40))
                             .foregroundColor(.white)
                             .padding(8)
                             .background(
