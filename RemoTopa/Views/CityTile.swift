@@ -24,15 +24,21 @@ struct CityTile: View {
                 .clipped()
                 .cornerRadius(10)
                 .shadow(radius: 5)
-            
-            Text(city.name)
-                .font(.largeTitle)
-                .foregroundColor(.white)
-                .padding(8)
-                .background(Color.black.opacity(0.6))
-                .cornerRadius(10)
-                .padding([.top], 15)
-                .padding([.leading, .trailing], 5)
+            VStack {
+                Text(city.name)
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(8)
+                    .background(Color.black.opacity(0.6))
+                    .cornerRadius(10)
+                    .padding([.top], 15)
+                    .padding([.leading, .trailing], 5)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+            }
         }
         .onTapGesture {
             onTap()

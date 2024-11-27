@@ -58,10 +58,6 @@ struct ExpandedCityView: View {
                             extraWidth: fullScreenExtraWidth,
                             extraHeight: fullScreenExtraHeight)
                     }
-//                    .onDisappear() {
-//                        hasFullScreenAnimationStarted = false
-//                        fullScreenImageOffset = .zero
-//                    }
                     .offset(x: dragOffset.width)
                     .gesture(
                         DragGesture()
@@ -91,7 +87,7 @@ struct ExpandedCityView: View {
             } else {
                 VStack {
                     Spacer()
-                    ZStack(alignment: .bottom) {
+                    ZStack(alignment: .topLeading) {
                         Image(city.imageName)
                             .resizable()
                             .scaledToFill()
@@ -105,14 +101,21 @@ struct ExpandedCityView: View {
                             .onAppear {
                                 startImageAnimation(extraWidth: extraWidth, extraHeight: extraHeight)
                             }
-                        Text(city.name)
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black.opacity(0.6))
-                            .cornerRadius(10)
-                            .padding([.bottom], 20)
-                            .padding([.leading, .trailing], 20)
+                        
+                            Text(city.name)
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .padding(8)
+                                .background(Color.black.opacity(0.6))
+                                .cornerRadius(10)
+                                .padding([.top], 20)
+                                .padding([.leading, .trailing], 23)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+                                .multilineTextAlignment(.center)
+                                .accessibilityLabel("City name: \(city.name)")
+
+
                     }
                     .onTapGesture(count: 2) {
 
@@ -211,7 +214,8 @@ struct ExpandedCityView_Previews: PreviewProvider {
     
     static var previews: some View {
         ExpandedCityView(
-            city: City(id: 1, name: "Argentina", imageName: "Argentina"),
+            city: City(id: 1, name: "Buenos Aires, Argentina", imageName: "Argentina"),
+            //city: City(id: 1, name: "Argentina", imageName: "Argentina"),
             namespace: namespace,
             onTap: {}
         )
