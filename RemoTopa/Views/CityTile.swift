@@ -26,7 +26,7 @@ struct CityTile: View {
                 .shadow(radius: 5)
             VStack {
                 Text(city.name)
-                    .font(.title)
+                    .font(.custom("GeneralSans-Light", size: 30))
                     .foregroundColor(.white)
                     .padding(8)
                     .background(

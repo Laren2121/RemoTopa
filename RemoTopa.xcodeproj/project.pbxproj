@@ -10,9 +10,22 @@
 		A4554E1F2CEFDC720018E14B /* RemoTopa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoTopa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A40CDBDB2CF7BC84008162C5 /* Exceptions for "RemoTopa" folder in "RemoTopa" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A43444B02CEEBF2B00B91EE5 /* RemoTopa */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A43444B32CEEBF2B00B91EE5 /* RemoTopa */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A40CDBDB2CF7BC84008162C5 /* Exceptions for "RemoTopa" folder in "RemoTopa" target */,
+			);
 			path = RemoTopa;
 			sourceTree = "<group>";
 		};
@@ -247,6 +260,7 @@
 				DEVELOPMENT_TEAM = UC9K374CH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RemoTopa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -276,6 +290,7 @@
 				DEVELOPMENT_TEAM = UC9K374CH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RemoTopa/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
