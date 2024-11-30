@@ -8,6 +8,8 @@ struct ExpandedCityView: View {
     @State private var isFullScreen: Bool = false
     @State private var dragOffset: CGSize = .zero
     
+    @StateObject private var viewModel: ExpandedCityViewModel
+    
     // Animation states
     @State private var imageOffset: CGSize = .zero
     @State private var hasAnimationStarted = false
@@ -58,6 +60,13 @@ struct ExpandedCityView: View {
         screenHeight * (fullScreenScaleFactor - 1)
     }
     
+    init(city: City, namespace: Namespace.ID, onTap: @escaping () -> Void) {
+        self.city = city
+        self.namespace = namespace
+        self.onTap = onTap
+        _viewModel = StateObject(wrappedValue: ExpandedCityViewModel(cityName: city.name))
+    }
+    
     var body: some View {
         ZStack {
             if isFullScreen {
@@ -88,27 +97,67 @@ struct ExpandedCityView: View {
                     resetFullScreenAnimation()
                 }
             
-            VStack(alignment: .center, spacing: 20) {
-                cityNameText(fontSize: 45)
-                    .padding(.top, 50)
-                
-                if isLoadingWeather {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                } else if let weather = weatherData {
-                    WeatherView(weatherData: weather, fontSize: 80)
-                } else if weatherError != nil {
-                    Text("Failed to load weather data.")
-                        .foregroundColor(.white)
+            ScrollView {
+                VStack(alignment: .center, spacing: 20) {
+                    
+                    cityNameText(fontSize: 45)
+                        .padding(.top, 50)
+                    
+                    if isLoadingWeather {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    } else if let weather = weatherData {
+                        WeatherView(weatherData: weather, fontSize: 80)
+                    } else if weatherError != nil {
+                        Text("Failed to load weather data.")
+                            .foregroundColor(.white)
+                    }
+                    
+                    if viewModel.isLoadingStatistics {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    } else if let statisticsError = viewModel.statisticsError {
+                        Text("Failed to load statistics.")
+                            .foregroundColor(.white)
+                    } else {
+                        statisticsGrid()
+                    }
+                    
+                    Spacer()
                 }
-                Spacer()
+                .padding(.horizontal, 20)
+                .frame(maxWidth: UIScreen.main.bounds.width - 40)
             }
-            .padding(.horizontal, 20)
-            .frame(maxWidth: UIScreen.main.bounds.width - 40)
         }
         .gesture(fullScreenDragGesture())
     }
     
+    // MARK: - Statistics Grid
+
+        @ViewBuilder
+        private func statisticsGrid() -> some View {
+            // Adjust the number of columns as needed
+            let columns = [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ]
+
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(viewModel.statistics) { stat in
+                    CircularProgressBar(
+                        progress: stat.isPercentage ? stat.value / 100 : min(stat.value / 2000, 1.0),
+                        lineWidth: 10,
+                        size: 120,
+                        foregroundColor: .blue,
+                        backgroundColor: .gray.opacity(0.3),
+                        animationDuration: 0.5,
+                        label: stat.name,
+                        valueLabel: stat.isPercentage ? "\(Int(stat.value))%" : "$\(Int(stat.value))"
+                    )
+                }
+            }
+            .padding(.top, 20)
+        }
     // MARK: - Regular View
     
     @ViewBuilder
