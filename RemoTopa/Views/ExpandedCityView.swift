@@ -115,7 +115,7 @@ struct ExpandedCityView: View {
     private func regularView() -> some View {
         VStack {
             Spacer()
-            ZStack(alignment: .topLeading) {
+            ZStack(alignment: .top) {
                 Image(city.imageName)
                     .resizable()
                     .scaledToFill()
@@ -131,6 +131,13 @@ struct ExpandedCityView: View {
                     }
                 
                 cityNameText(fontSize: 40)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.clear)
+                            .background(BlurView(style: .systemUltraThinMaterialDark))
+                            .opacity(0.5)
+                    )
+                    .cornerRadius(10)
                     .padding([.top], 20)
                     .padding([.leading, .trailing], 23)
             }
@@ -145,7 +152,7 @@ struct ExpandedCityView: View {
     
     private func cityNameText(fontSize: CGFloat) -> some View {
         Text(city.name)
-            .font(.custom("GeneralSans-Medium", size: fontSize))
+            .font(.custom("GeneralSans-Light", size: fontSize))
             .foregroundColor(.white)
             .padding(8)
             .cornerRadius(10)
@@ -166,8 +173,9 @@ struct ExpandedCityView: View {
                     .foregroundColor(.white)
                 
                 Text(weatherData.weather.first?.description.capitalized ?? "")
-                    .font(.custom("GeneralSans-Regular", size: 24))
+                    .font(.custom("GeneralSans-Medium", size: 24))
                     .foregroundColor(.white)
+                    .background()
             }
         }
     }

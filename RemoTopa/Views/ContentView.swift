@@ -26,7 +26,6 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            
             VStack {
                 LinearGradient(gradient: Gradient(colors: [.orange, .black]), startPoint: .top, endPoint: .bottom)
             }

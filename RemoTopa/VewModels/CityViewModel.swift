@@ -11,6 +11,4 @@ import Combine
 class CityViewModel: ObservableObject {
     @Published var cities: [City] = []
     private var cancellables = Set<AnyCancellable>()
-    
-    
 }
