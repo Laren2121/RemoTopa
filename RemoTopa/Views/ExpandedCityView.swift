@@ -73,7 +73,6 @@ struct ExpandedCityView: View {
     @ViewBuilder
     private func fullScreenView() -> some View {
         ZStack {
-            // Background Image
             Image(city.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -89,9 +88,8 @@ struct ExpandedCityView: View {
                     resetFullScreenAnimation()
                 }
             
-            // Content Overlay
-            VStack(spacing: 20) {
-                cityNameText(fontSize: 30)
+            VStack(alignment: .center, spacing: 20) {
+                cityNameText(fontSize: 60)
                     .padding(.top, 50)
                 
                 if isLoadingWeather {
@@ -105,7 +103,8 @@ struct ExpandedCityView: View {
                 }
                 Spacer()
             }
-            .padding()
+            .padding(.horizontal, 20)
+            .frame(maxWidth: UIScreen.main.bounds.width - 40)
         }
         .gesture(fullScreenDragGesture())
     }
@@ -156,6 +155,7 @@ struct ExpandedCityView: View {
             .minimumScaleFactor(0.8)
             .multilineTextAlignment(.center)
             .accessibilityLabel("City name: \(city.name)")
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     private struct WeatherView: View {
