@@ -96,7 +96,7 @@ struct ExpandedCityView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else if let weather = weatherData {
-                    WeatherView(weatherData: weather)
+                    WeatherView(weatherData: weather, fontSize: 45)
                 } else if weatherError != nil {
                     Text("Failed to load weather data.")
                         .foregroundColor(.white)
@@ -113,7 +113,7 @@ struct ExpandedCityView: View {
     
     @ViewBuilder
     private func regularView() -> some View {
-        VStack {
+        VStack(spacing: 10) {
             Spacer()
             ZStack(alignment: .top) {
                 Image(city.imageName)
@@ -128,18 +128,41 @@ struct ExpandedCityView: View {
                     .shadow(radius: 10)
                     .onAppear {
                         startImageAnimation()
+                        fetchWeather()
                     }
                 
-                cityNameText(fontSize: 40)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.clear)
-                            .background(BlurView(style: .systemUltraThinMaterialDark))
-                            .opacity(0.5)
-                    )
-                    .cornerRadius(10)
-                    .padding([.top], 20)
-                    .padding([.leading, .trailing], 23)
+                VStack(alignment: .center, spacing: 5) {
+                    cityNameText(fontSize: 40)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(.clear)
+                                .background(BlurView(style: .systemUltraThinMaterialDark))
+                                .opacity(0.5)
+                        )
+                        .cornerRadius(10)
+                        .padding([.top], 20)
+                        .padding([.leading, .trailing], 23)
+               
+                    if isLoadingWeather {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    } else if let weather = weatherData {
+                        WeatherView(weatherData: weather, fontSize: 40)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(.clear)
+                                    .background(BlurView(style: .systemUltraThinMaterialDark))
+                                    .opacity(0.3)
+                            )
+                            .cornerRadius(10)
+                            .padding(.top, 60)
+                    } else if weatherError != nil {
+                        Text("Failed to load weather data.")
+                            .foregroundColor(.white)
+                            .font(.custom("GeneralSans-Regular", size: 14))
+                    }
+                }
+                .padding(10)
             }
             .onTapGesture(count: 2) {
                 enterFullScreen()
@@ -165,11 +188,12 @@ struct ExpandedCityView: View {
     
     private struct WeatherView: View {
         let weatherData: WeatherData
+        let fontSize: CGFloat
         
         var body: some View {
-            VStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("\(Int(weatherData.main.temp - 273.15))°C")
-                    .font(.custom("GeneralSans-Extralight", size: 100))
+                    .font(.custom("GeneralSans-Extralight", size: fontSize))
                     .foregroundColor(.white)
                     .padding(8)
                                 
