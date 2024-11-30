@@ -96,7 +96,7 @@ struct ExpandedCityView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else if let weather = weatherData {
-                    WeatherView(weatherData: weather, fontSize: 45)
+                    WeatherView(weatherData: weather, fontSize: 80)
                 } else if weatherError != nil {
                     Text("Failed to load weather data.")
                         .foregroundColor(.white)
@@ -191,7 +191,7 @@ struct ExpandedCityView: View {
         let fontSize: CGFloat
         
         var body: some View {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .center, spacing: 10) {
                 Text("\(Int(weatherData.main.temp - 273.15))°C")
                     .font(.custom("GeneralSans-Extralight", size: fontSize))
                     .foregroundColor(.white)
