@@ -116,7 +116,6 @@ struct ExpandedCityView: View {
         VStack {
             Spacer()
             ZStack(alignment: .topLeading) {
-                // City Image
                 Image(city.imageName)
                     .resizable()
                     .scaledToFill()
@@ -131,7 +130,6 @@ struct ExpandedCityView: View {
                         startImageAnimation()
                     }
                 
-                // City Name
                 cityNameText(fontSize: 40)
                     .padding([.top], 20)
                     .padding([.leading, .trailing], 23)
@@ -210,7 +208,6 @@ struct ExpandedCityView: View {
         let directions: [AnimationDirection] = [.leftToRight, .rightToLeft, .topToBottom, .bottomToTop]
         animationDirection.wrappedValue = directions.randomElement() ?? .leftToRight
         
-        // Set initial offset based on direction
         imageOffset.wrappedValue = initialOffset(for: animationDirection.wrappedValue, extraWidth: extraWidth, extraHeight: extraHeight)
         
         withAnimation(Animation.linear(duration: duration)) {
