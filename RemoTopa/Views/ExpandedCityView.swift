@@ -89,7 +89,7 @@ struct ExpandedCityView: View {
                 }
             
             VStack(alignment: .center, spacing: 20) {
-                cityNameText(fontSize: 60)
+                cityNameText(fontSize: 45)
                     .padding(.top, 50)
                 
                 if isLoadingWeather {
@@ -169,13 +169,13 @@ struct ExpandedCityView: View {
         var body: some View {
             VStack(spacing: 10) {
                 Text("\(Int(weatherData.main.temp - 273.15))°C")
-                    .font(.custom("GeneralSans-Extralight", size: 48))
+                    .font(.custom("GeneralSans-Extralight", size: 100))
                     .foregroundColor(.white)
-                
+                    .padding(8)
+                                
                 Text(weatherData.weather.first?.description.capitalized ?? "")
-                    .font(.custom("GeneralSans-Medium", size: 24))
+                    .font(.custom("GeneralSans-Light", size: 20))
                     .foregroundColor(.white)
-                    .background()
             }
         }
     }
