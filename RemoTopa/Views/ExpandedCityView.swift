@@ -97,7 +97,7 @@ struct ExpandedCityView: View {
                     resetFullScreenAnimation()
                 }
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .center, spacing: 20) {
                     
                     cityNameText(fontSize: 45)
