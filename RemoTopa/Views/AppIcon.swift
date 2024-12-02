@@ -31,7 +31,7 @@ struct AppIcon: View {
             
             VStack(spacing: 10) {
                 ZStack {
-                    ArcShape(progress: 0.5)
+                    ArcShapeParent(progress: 0.5)
                         .stroke(Color.black,
                                 style: StrokeStyle(
                                     lineWidth: 15,
@@ -50,13 +50,18 @@ struct AppIcon: View {
                         )
                         .frame(width: 140, height: 40)
                         .padding(.top, 50)
+                    
+                    Text("RemoTopa")
+                        .font(.custom("GeneralSans-MediumItalic", size: 24))
+                        .padding(.top, 180)
+                        .shadow(radius: 50, y: 10)
                 }
             }
         }
     }
 }
 
-struct ArcShape: Shape {
+struct ArcShapeParent: Shape {
     var progress: Double
     
     func path(in rect: CGRect) -> Path {
