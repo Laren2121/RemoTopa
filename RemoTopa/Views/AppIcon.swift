@@ -57,6 +57,21 @@ struct AppIcon: View {
                         .shadow(radius: 50, y: 10)
                 }
             }
+            
+            ZStack(alignment: .bottom) {
+                Text("Find the best place to work around the world..!")
+                    .font(.custom("GeneralSans-MediumItalic", size: 19))
+                    .foregroundColor(.gray)            .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 400)
+                    .shadow(radius: 50, y: 10)
+
+            }
+            .padding(.top, 150)
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
         }
     }
 }
