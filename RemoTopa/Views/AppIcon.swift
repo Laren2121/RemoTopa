@@ -14,7 +14,7 @@ struct AppIcon: View {
             // Background
             Color(.darkGray)
                 .edgesIgnoringSafeArea(.all)
-            
+        
             // Icon
             RoundedRectangle(cornerRadius: 70)
                 .fill(LinearGradient(
@@ -22,9 +22,12 @@ struct AppIcon: View {
                     startPoint: .top,
                     endPoint: .bottom))
                 .frame(width: 220, height: 220)
+                .padding(.top, 60)
                 .overlay(
                     RoundedRectangle(cornerRadius: 70)
                         .stroke(Color.black, lineWidth: 15)
+                        .frame(width: 220, height: 220)
+                        .padding(.top, 60)
                 )
             
             VStack(spacing: 10) { // Add spacing between the arcs
@@ -38,7 +41,6 @@ struct AppIcon: View {
                         .stroke(Color.black, lineWidth: 15)
                         .frame(width: 140, height: 40) // Smaller arc
                         .padding(.top, 50)
-                    
                 }
             }
         }
