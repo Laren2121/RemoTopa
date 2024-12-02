@@ -11,7 +11,7 @@ struct AppIcon: View {
     var body: some View {
         
         ZStack {
-            Color(.darkGray)
+            Color(.black)
                 .edgesIgnoringSafeArea(.all)
         
             RoundedRectangle(cornerRadius: 70)
@@ -20,7 +20,7 @@ struct AppIcon: View {
                     startPoint: .top,
                     endPoint: .bottom))
                 .frame(width: 220, height: 220)
-                .shadow(color: Color.black, radius: 10, x: 0, y: 10)
+                .shadow(color: Color.gray, radius: 50)
                 .padding(.top, 60)
                 .overlay(
                     RoundedRectangle(cornerRadius: 70)
