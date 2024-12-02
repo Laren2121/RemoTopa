@@ -41,8 +41,6 @@ struct CityTile: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
-                
-                Spacer()
             }
         }
         .onTapGesture {
